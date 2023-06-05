@@ -34,8 +34,8 @@
 			<TextBlock Text="Bitcoins Live Trades (BTC/USDT)" FontSize="25" Margin="20" FontWeight="Bold"/>
 			<DataGrid Margin="20" Items="{Binding Trades}">
 				<DataGrid.Columns>
-					<DataGridTextColumn Header="Trade side" Binding="{Binding BuyerIsMarker, Converter={StaticResource BoolToStringConverter}}"/>
-					<DataGridTextColumn Header="Trade price" Binding="{Binding Price}" />
+					<DataGridTextColumn Header="Trade side" Binding="{Binding BinanceRecentTradeQuote.BuyerIsMarker, Converter={StaticResource BoolToStringConverter}}"/>
+					<DataGridTextColumn Header="Trade price" Binding="{Binding BinanceRecentTradeQuote.Price}" />
 					<DataGridTextColumn Header="Trade volume" Binding="{Binding QuoteQuantity}" />
 					<DataGridTextColumn Header="Trade time" Binding="{Binding TradeTime}" />
 				</DataGrid.Columns>

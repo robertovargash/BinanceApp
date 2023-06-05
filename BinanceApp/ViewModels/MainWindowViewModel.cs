@@ -36,8 +36,7 @@ namespace BinanceApp.ViewModels
     }
 
     public async Task GetData()
-    {
-      
+    {      
       var trades = await _binanceClient.SpotApi.ExchangeData.GetRecentTradesAsync( "BTCUSDT" );
       Trades = trades.Data;
 
