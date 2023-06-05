@@ -41,8 +41,8 @@ namespace BinanceApp.ViewModels
       Trades = trades.Data;
 
       var t = await _binanceClient.SpotApi.ExchangeData.GetTickerAsync( "BTCUSDT" );
-      Bid = t.Data.BestBidPrice.ToString();
-      Ask = t.Data.BestAskPrice.ToString();
+      Bid = t.Data.BestBidPrice.ToString( "N3" );
+      Ask = t.Data.BestAskPrice.ToString("F3");
 
       if( string.IsNullOrWhiteSpace( Bid ) )
       {
