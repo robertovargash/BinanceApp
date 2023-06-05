@@ -20,7 +20,13 @@ namespace BinanceApp.ViewModels
 
     DispatcherTimer timer = new DispatcherTimer();
 
-    public IEnumerable<IBinanceRecentTrade> Trades { get; set; }
+    private IEnumerable<IBinanceRecentTrade> _Trades;
+
+    public IEnumerable<IBinanceRecentTrade> Trades
+    {
+      get => _Trades;
+      set => this.RaiseAndSetIfChanged( ref _Trades, value );
+    }
 
     private string _Bid;
     public string Bid
@@ -42,7 +48,7 @@ namespace BinanceApp.ViewModels
 
       var t = await _binanceClient.SpotApi.ExchangeData.GetTickerAsync( "BTCUSDT" );
       Bid = t.Data.BestBidPrice.ToString( "N3" );
-      Ask = t.Data.BestAskPrice.ToString("F3");
+      Ask = t.Data.BestAskPrice.ToString( "N3" );
 
       if( string.IsNullOrWhiteSpace( Bid ) )
       {
@@ -57,7 +63,12 @@ namespace BinanceApp.ViewModels
 
     public void Start()
     {
-      timer.Interval = new TimeSpan( 0, 0, 5 );
+      //Dispatcher.UIThread.InvokeAsync( ( Action )delegate
+      //{
+      //  this.GetData();
+      //}, DispatcherPriority.Render );
+
+      timer.Interval = new TimeSpan( 0, 0, 1 );
       timer.Tick += ( a, b ) =>
       {
         this.GetData();

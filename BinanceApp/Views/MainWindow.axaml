@@ -8,9 +8,6 @@
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="BinanceApp">
-	<Window.Resources>
-		<vm:BoolToStringConverter x:Key="BoolToStringConverter" />
-	</Window.Resources>
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
@@ -34,8 +31,17 @@
 			<TextBlock Text="Bitcoins Live Trades (BTC/USDT)" FontSize="25" Margin="20" FontWeight="Bold"/>
 			<DataGrid Margin="20" Items="{Binding Trades}">
 				<DataGrid.Columns>
-					<DataGridTextColumn Header="Trade side" Binding="{Binding BinanceRecentTradeQuote.BuyerIsMarker, Converter={StaticResource BoolToStringConverter}}"/>
-					<DataGridTextColumn Header="Trade price" Binding="{Binding BinanceRecentTradeQuote.Price}" />
+					<DataGridTemplateColumn Header="Trade side" >
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Grid>
+									<TextBlock Text="SELL" IsVisible="{Binding !BuyerIsMarker}" />
+									<TextBlock Text="BUY" IsVisible="{Binding BuyerIsMarker}" />
+								</Grid>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>					
+					<DataGridTextColumn Header="Trade price" Binding="{Binding Price}" />
 					<DataGridTextColumn Header="Trade volume" Binding="{Binding QuoteQuantity}" />
 					<DataGridTextColumn Header="Trade time" Binding="{Binding TradeTime}" />
 				</DataGrid.Columns>

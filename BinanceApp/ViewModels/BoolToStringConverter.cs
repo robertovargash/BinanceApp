@@ -8,20 +8,24 @@ using System.Threading.Tasks;
 
 namespace BinanceApp.ViewModels
 {
-  internal class BoolToStringConverter : IValueConverter
+  public class OpositeBoolToVisibilityConverter : IValueConverter
   {
-    public object? Convert( object? value, Type targetType, object? parameter, CultureInfo culture )
+
+    public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
     {
-      if( ( bool )value )
+      bool bValue = false;
+      if( value is bool )
       {
-        return "BUY";
+        bValue = ( bool )value;
       }
-      return "SELL";
+
+      return ( bValue ) ? FalseValue : TrueValue;
     }
 
-    public object? ConvertBack( object? value, Type targetType, object? parameter, CultureInfo culture )
+    public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
     {
-      throw new NotImplementedException();
+      return value as Visibility? == FalseValue;
     }
   }
+
 }
