@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:BinanceApp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="BinanceApp.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="BinanceApp">
+	<Window.Resources>
+		<vm:BoolToStringConverter x:Key="BoolToStringConverter" />
+	</Window.Resources>
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+	<Grid RowDefinitions="Auto,*">
+		<StackPanel>
+			<TextBlock Text="Bitcoins Info (BTC/USDT)" FontSize="25" Margin="20" FontWeight="Bold"/>
+			<StackPanel Orientation="Horizontal">
+				<StackPanel>
+					<TextBlock Text="Bid" Margin="20" FontWeight="Bold"/>
+					<TextBlock Text="{Binding Bid}" Margin="20" Foreground="Red" FontWeight="Bold"/>
+				</StackPanel>
+				<StackPanel>
+					<TextBlock Text="Ask" Margin="20" FontWeight="Bold"/>
+					<TextBlock Text="{Binding Ask}" Margin="20" Foreground="Red" FontWeight="Bold"/>
+				</StackPanel>
+			</StackPanel>
+		</StackPanel>
+		<StackPanel Grid.Row="1">
+			<TextBlock Text="Bitcoins Live Trades (BTC/USDT)" FontSize="25" Margin="20" FontWeight="Bold"/>
+			<DataGrid Margin="20" Items="{Binding Trades}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Trade side" Binding="{Binding BuyerIsMarker, Converter={StaticResource BoolToStringConverter}}"/>
+					<DataGridTextColumn Header="Trade price" Binding="{Binding Price}" />
+					<DataGridTextColumn Header="Trade volume" Binding="{Binding QuoteQuantity}" />
+					<DataGridTextColumn Header="Trade time" Binding="{Binding TradeTime}" />
+				</DataGrid.Columns>
+			</DataGrid>
+		</StackPanel>
+	</Grid>
+
+
+</Window>
